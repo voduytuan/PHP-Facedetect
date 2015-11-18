@@ -84,7 +84,7 @@ static void php_facedetect(INTERNAL_FUNCTION_PARAMETERS, int return_type)
 	CvSeq *faces;
 	CvRect *rect;
 
-	if(zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "ss", &file, &flen, &casc, &clen) == FAILURE) {
+	if(zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "ssd", &file, &flen, &casc, &clen, scalefactor) == FAILURE) {
 		RETURN_NULL();
 	}
 
@@ -104,7 +104,7 @@ static void php_facedetect(INTERNAL_FUNCTION_PARAMETERS, int return_type)
 
 	storage = cvCreateMemStorage(0);
 
-	faces = cvHaarDetectObjects(gray, cascade, storage, 1.1, 2, CV_HAAR_DO_CANNY_PRUNING, cvSize(0, 0), cvSize(0, 0));
+	faces = cvHaarDetectObjects(gray, cascade, storage, scalefactor, 2, CV_HAAR_DO_CANNY_PRUNING, cvSize(0, 0), cvSize(0, 0));
 
 	if(return_type) {
 
